@@ -107,19 +107,21 @@ jobs:
   if_test6:
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag'
+    outputs:
+      tag_package_status: ${{ steps.status.outputs.tag_packages }}
     steps:
       - name: Pre-requisites
         id: status
         if: $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " " | grep "main")))
         run: |
-          echo ::set-output name=tag_packages::true
-          echo ::set-output name=package_names::proxy web git rest fuseki 
+          echo ::set-output name=tag_packages::'true'
+          echo ::set-output name=package_names::'proxy web git rest fuseki'
           echo "Tagging of packages should happen as we are receiving a tag on master branch"
 
   if_test7:
     runs-on: ubuntu-latest
     needs: [if_test6]
-    if: needs.if_test6.steps.status.outputs.tag_packages == 'true'
+    if: needs.if_test6.outputs.tag_package_status == 'true'
     steps:
       - name: Result
         run: |
