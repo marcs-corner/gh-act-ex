@@ -126,7 +126,7 @@ jobs:
     steps:
       - name: Result
         run: |
-          for pkg_name in "${{ needs.if_test6.outputs.package_names }}"; do
+          for pkg_name in `echo "${{ needs.if_test6.outputs.package_names }}" | tr ' ' '\n'` ; do
             echo "$pkg_name"
           done
           echo "Packages tagged..."
