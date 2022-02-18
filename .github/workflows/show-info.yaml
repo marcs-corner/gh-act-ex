@@ -84,7 +84,7 @@ jobs:
         run: echo "Multi-if && tag type, check branch success! (${{ github.job }})"
   if_test5b:
     runs-on: ubuntu-latest
-    if: &
+    if: |
       $("${{ github.ref_type }}" == 'tag' &&
       contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
     steps:
