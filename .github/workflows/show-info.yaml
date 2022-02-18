@@ -30,7 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.ref == 'refs/heads/main' &&
-      !contains(github.event.head_commit.message, 'merge')
+      contains(github.event.head_commit.message, 'merge')
+    steps:
+    - name: Result
+      run: echo "Multi-if && success! (${{ github.job }})"
+  if_test2b:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' &&
+      contains(github.event.head_commit.message, '[Mm]erge')
     steps:
     - name: Result
       run: echo "Multi-if && success! (${{ github.job }})"
@@ -38,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.ref == 'refs/heads/main' ||
-      !contains(github.event.head_commit.message, 'merge')
+      contains(github.event.head_commit.message, 'merge')
     steps:
     - name: Result
       run: echo "Multi-if || success! (${{ github.job }})"
