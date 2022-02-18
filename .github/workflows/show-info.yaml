@@ -109,6 +109,7 @@ jobs:
     if: github.ref_type == 'tag'
     outputs:
       tag_package_status: ${{ steps.status.outputs.tag_packages }}
+      package_names: ${{ steps.status.outputs.package_names }}
     steps:
       - name: Pre-requisites
         id: status
@@ -125,9 +126,7 @@ jobs:
     steps:
       - name: Result
         run: |
-          $(
-            for pkg_name in "${{ needs.if_test6.steps.status.outputs.package_names }}"; do
-              echo "$pkg_name"
-            done
-          )
+          for pkg_name in "${{ needs.if_test6.outputs.package_names }}"; do
+            echo "$pkg_name"
+          done
           echo "Packages tagged..."
