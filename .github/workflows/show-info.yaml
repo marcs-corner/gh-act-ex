@@ -38,7 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.ref == 'refs/heads/main' &&
-      contains(github.event.head_commit.message, '[Mm]erge')
+      (
+        contains(github.event.head_commit.message, 'Merge') ||
+        contains(github.event.head_commit.message, 'merge')
+      )
     steps:
     - name: Result
       run: echo "Multi-if && success! (${{ github.job }})"
