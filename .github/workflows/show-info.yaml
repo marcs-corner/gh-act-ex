@@ -53,3 +53,11 @@ jobs:
     steps:
     - name: Result
       run: echo "Multi-if || success! (${{ github.job }})"
+  if_test4:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' &&
+      startsWith(github.event.head_commit.message, 'random')
+    steps:
+    - name: Result
+      run: echo "Multi-if && startsWith success! (${{ github.job }})"
