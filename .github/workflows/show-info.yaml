@@ -115,7 +115,7 @@ jobs:
     steps:
       - name: Pre-requisites
         id: status
-        if: ${{ !startsWith(github.event.head_commit.message, 'test') }}
+        if: ${{ !startsWith(github.event.head_commit.message, 'update') }}
         run: |
           echo ::set-output name=tag_packages::'true'
           echo ::set-output name=package_names::'proxy web git rest fuseki'
