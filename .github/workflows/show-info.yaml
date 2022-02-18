@@ -23,10 +23,12 @@ jobs:
           echo github.event_name: ${{ github.event_name }}
           echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
           echo github.sha: ${{ github.sha }}
-          echo branch of github.sha: $(git branch --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " ")
-          echo branch of github.sha - raw: $(git branch --contains "${{ github.sha }}")
-
-        # echo github.: ${{ github. }}
+          echo branch of github.sha: $(git branch -a -r --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " ")
+          echo branch of github.sha - raw: $(git branch -a -r --contains "${{ github.sha }}")
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
   if_test1:
     runs-on: ubuntu-latest
     if: |
