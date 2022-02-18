@@ -92,8 +92,8 @@ jobs:
   if_test5b:
     runs-on: ubuntu-latest
     if: |
-      ${{ github.ref_type == 'tag' &&
-      contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")) }}
+      ${{ github.ref_type == 'tag' }} &&
+      contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
     steps:
       - uses: actions/checkout@v2
         with:
