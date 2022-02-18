@@ -76,18 +76,23 @@ jobs:
     steps:
       - name: Result
         if: contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
-        run: echo "separated-if, tag type and main branch success! (${{ github.job }})"
+        run: |
+          echo "separated-if, tag type and main branch success! (${{ github.job }})"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
   if_test5a:
     runs-on: ubuntu-latest
-    if: ${{ github.ref_type == 'tag' }} && contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
+    if: ${{ github.ref_type == 'tag' }} && $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | grep "main")
     steps:
       - name: Result
-        run: echo "Multi-if && tag type, check branch success! (${{ github.job }})"
+        run: |
+          echo "Multi-if && tag type, check branch success! (${{ github.job }})"
+          echo "github.ref_type: ${{ github.ref_type }}"
+          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
   if_test5b:
     runs-on: ubuntu-latest
-    if: |
-      $("${{ github.ref_type }}" == 'tag' &&
-      contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
+    if: github.ref_type == 'tag'
+    if: contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
     steps:
       - uses: actions/checkout@v2
         with:
