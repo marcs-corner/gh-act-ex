@@ -35,85 +35,87 @@ jobs:
     steps:
       - name: Result
         run: echo "If main branch success! (${{ github.job }})"
-  if_test2:
-    runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/main' &&
-      contains(github.event.head_commit.message, 'merge')
-    steps:
-      - name: Result
-        run: echo "Multi-if && success! (${{ github.job }})"
-  if_test2b:
-    runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/main' &&
-      (
-        contains(github.event.head_commit.message, 'Merge') ||
-        contains(github.event.head_commit.message, 'merge')
-      )
-    steps:
-      - name: Result
-        run: echo "Multi-if && success! (${{ github.job }})"
-  if_test3:
-    runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/main' ||
-      contains(github.event.head_commit.message, 'merge')
-    steps:
-      - name: Result
-        run: echo "Multi-if || success! (${{ github.job }})"
-  if_test4:
-    runs-on: ubuntu-latest
-    if: |
-      github.ref == 'refs/heads/main' &&
-      startsWith(github.event.head_commit.message, 'random')
-    steps:
-      - name: Result
-        run: echo "Multi-if && startsWith success! (${{ github.job }})"
-  if_test5:
-    runs-on: ubuntu-latest
-    if: github.ref_type == 'tag'
-    steps:
-      - name: Result
-        if: contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
-        run: |
-          echo "separated-if, tag type and main branch success! (${{ github.job }})"
-          echo "github.ref_type: ${{ github.ref_type }}"
-          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
-  if_test5a:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref_type == 'tag' }} && $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | grep "main")
-    steps:
-      - name: Result
-        run: |
-          echo "Multi-if && tag type, check branch success! (${{ github.job }})"
-          echo "github.ref_type: ${{ github.ref_type }}"
-          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
-  if_test5b:
-    runs-on: ubuntu-latest
-    if: |
-      $( [ "${{ github.ref_type }}" = 'tag' ] &&
-      git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: Result
-        run: |
-          echo "Multi-if && tag type, check branch with checkout success! (${{ github.job }})"
-          echo "github.ref_type: ${{ github.ref_type }}"
-          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
+## hide
+  # if_test2:
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     github.ref == 'refs/heads/main' &&
+  #     contains(github.event.head_commit.message, 'merge')
+  #   steps:
+  #     - name: Result
+  #       run: echo "Multi-if && success! (${{ github.job }})"
+  # if_test2b:
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     github.ref == 'refs/heads/main' &&
+  #     (
+  #       contains(github.event.head_commit.message, 'Merge') ||
+  #       contains(github.event.head_commit.message, 'merge')
+  #     )
+  #   steps:
+  #     - name: Result
+  #       run: echo "Multi-if && success! (${{ github.job }})"
+  # if_test3:
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     github.ref == 'refs/heads/main' ||
+  #     contains(github.event.head_commit.message, 'merge')
+  #   steps:
+  #     - name: Result
+  #       run: echo "Multi-if || success! (${{ github.job }})"
+  # if_test4:
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     github.ref == 'refs/heads/main' &&
+  #     startsWith(github.event.head_commit.message, 'random')
+  #   steps:
+  #     - name: Result
+  #       run: echo "Multi-if && startsWith success! (${{ github.job }})"
+  # if_test5:
+  #   runs-on: ubuntu-latest
+  #   if: github.ref_type == 'tag'
+  #   steps:
+  #     - name: Result
+  #       if: contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
+  #       run: |
+  #         echo "separated-if, tag type and main branch success! (${{ github.job }})"
+  #         echo "github.ref_type: ${{ github.ref_type }}"
+  #         echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
+  # if_test5a:
+  #   runs-on: ubuntu-latest
+  #   if: ${{ github.ref_type == 'tag' }} && $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | grep "main")
+  #   steps:
+  #     - name: Result
+  #       run: |
+  #         echo "Multi-if && tag type, check branch success! (${{ github.job }})"
+  #         echo "github.ref_type: ${{ github.ref_type }}"
+  #         echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
+  # if_test5b:
+  #   runs-on: ubuntu-latest
+  #   if: |
+  #     $( [ "${{ github.ref_type }}" = 'tag' ] &&
+  #     git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main"))
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: '0'
+  #     - name: Result
+  #       run: |
+  #         echo "Multi-if && tag type, check branch with checkout success! (${{ github.job }})"
+  #         echo "github.ref_type: ${{ github.ref_type }}"
+  #         echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
 
+## unhide
   if_test6:
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag'
+    if: $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " " | grep "main")))
     outputs:
       tag_package_status: ${{ steps.status.outputs.tag_packages }}
       package_names: ${{ steps.status.outputs.package_names }}
     steps:
       - name: Pre-requisites
         id: status
-        if: $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " " | grep "main")))
+        if: !startsWith(github.event.head_commit.message, 'test')
         run: |
           echo ::set-output name=tag_packages::'true'
           echo ::set-output name=package_names::'proxy web git rest fuseki'
