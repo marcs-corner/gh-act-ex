@@ -95,7 +95,7 @@ jobs:
         run: |
           echo "Multi-if && tag type, check branch with checkout success! (${{ github.job }})"
           echo "github.ref_type: ${{ github.ref_type }}"
-          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }})"
+          echo git branch -r -a --contains ...: $(git branch -r -a --contains "${{ github.sha }}")
   if_test5c:
     runs-on: ubuntu-latest
     if: |
