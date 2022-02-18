@@ -8,13 +8,14 @@ jobs:
   show_info:
     runs-on: ubuntu-latest
     steps:
-    - name: PR to master - vars
-    run: |
-      echo github.base_ref: ${{ github.base_ref }}
-      echo github.head_ref: ${{ github.head_ref }}
-      echo github.ref: ${{ github.ref }}
-      echo github.ref_name: ${{ github.ref_name }}
-      echo github.ref_type: ${{ github.ref_type }}
-      echo github.event_name: ${{ github.event_name }}
-      echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
-      echo github.: ${{ github. }}
+    - name: Push main info vars
+      run: |
+        echo github.base_ref: ${{ github.base_ref }}
+        echo github.head_ref: ${{ github.head_ref }}
+        echo github.ref: ${{ github.ref }}
+        echo github.ref_name: ${{ github.ref_name }}
+        echo github.ref_type: ${{ github.ref_type }}
+        echo github.event_name: ${{ github.event_name }}
+        echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
+
+      # echo github.: ${{ github. }}
