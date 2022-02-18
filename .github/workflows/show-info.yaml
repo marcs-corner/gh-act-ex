@@ -12,9 +12,6 @@ jobs:
   show_info:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
       - name: Push main info vars
         run: |
           echo github.base_ref: ${{ github.base_ref }}
@@ -75,12 +72,18 @@ jobs:
         run: echo "Multi-if && startsWith success! (${{ github.job }})"
   if_test5:
     runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+    steps:
+      - name: Result
+        run: echo "Multi-if && tag type success! (${{ github.job }})"
+  if_test5a:
+    runs-on: ubuntu-latest
     if: |
       github.ref_type == 'tag' &&
       contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
     steps:
       - name: Result
-        run: echo "Multi-if && check branch success! (${{ github.job }})"
+        run: echo "Multi-if && tag type, check branch success! (${{ github.job }})"
   if_test5b:
     runs-on: ubuntu-latest
     if: |
@@ -89,4 +92,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Result
-        run: echo "Multi-if && check branch with checkout success! (${{ github.job }})"
+        run: echo "Multi-if && tag type, check branch with checkout success! (${{ github.job }})"
+  if_test5c:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref_type == 'tag' &&
+      contains($(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " "), "main")
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Result
+        run: echo "Multi-if && tag type, check branch with deep checkout success! (${{ github.job }})"
