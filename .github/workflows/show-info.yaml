@@ -8,13 +8,37 @@ jobs:
   show_info:
     runs-on: ubuntu-latest
     steps:
-    - name: PR to master - vars
-    run: |
-      echo github.base_ref: ${{ github.base_ref }}
-      echo github.head_ref: ${{ github.head_ref }}
-      echo github.ref: ${{ github.ref }}
-      echo github.ref_name: ${{ github.ref_name }}
-      echo github.ref_type: ${{ github.ref_type }}
-      echo github.event_name: ${{ github.event_name }}
-      echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
-      echo github.: ${{ github. }}
+    - name: Push main info vars
+      run: |
+        echo github.base_ref: ${{ github.base_ref }}
+        echo github.head_ref: ${{ github.head_ref }}
+        echo github.ref: ${{ github.ref }}
+        echo github.ref_name: ${{ github.ref_name }}
+        echo github.ref_type: ${{ github.ref_type }}
+        echo github.event_name: ${{ github.event_name }}
+        echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
+
+      # echo github.: ${{ github. }}
+  if_test1:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main'
+    steps:
+    - name: Result
+      run: echo "If main branch success! (${{ github.job }})"
+  if_test2:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' &&
+      !contains(github.event.head_commit.message, 'merge')
+    steps:
+    - name: Result
+      run: echo "Multi-if && success! (${{ github.job }})"
+  if_test3:
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' ||
+      !contains(github.event.head_commit.message, 'merge')
+    steps:
+    - name: Result
+      run: echo "Multi-if || success! (${{ github.job }})"
