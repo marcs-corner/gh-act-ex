@@ -109,7 +109,7 @@ jobs:
     if: github.ref_type == 'tag'
     steps:
       - name: Pre-requisites
-        id: output
+        id: status
         if: $(git branch -r -a --contains "${{ github.sha }}" | grep -v detached | tr -d "*" | tr -s " " | grep "main")))
         run: |
           echo ::set-output name=tag_packages::true
@@ -119,12 +119,12 @@ jobs:
   if_test7:
     runs-on: ubuntu-latest
     needs: [if_test6]
-    if: needs.if_test6.steps.outputs.tag_packages == 'true'
+    if: needs.if_test6.steps.status.outputs.tag_packages == 'true'
     steps:
       - name: Result
         run: |
           $(
-            for pkg_name in "${{ needs.if_test6.steps.outputs.package_names }}"; do
+            for pkg_name in "${{ needs.if_test6.steps.status.outputs.package_names }}"; do
               echo "$pkg_name"
             done
           )
