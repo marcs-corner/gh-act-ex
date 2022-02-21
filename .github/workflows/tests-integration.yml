@@ -11,12 +11,12 @@ env:
   repository: "${{ github.repository }}"
   tag: "test-${{ github.run_id }}"
   image: "ghcr.io/${{ github.repository }}:test-${{ github.run_id }}"
-  username: "${{ github.repository_owner }}"
-  password: "${{ github.token }}"
-  token: "${{ github.token }}"
-  # username: ${{ github.actor }}
-  # password: ${{ secrets.GITHUB_TOKEN }}
-  # token: ${{ secrets.GITHUB_TOKEN }}
+  # username: "${{ github.repository_owner }}"
+  # password: "${{ github.token }}"
+  # token: "${{ github.token }}"
+  username: ${{ github.actor }}
+  password: ${{ secrets.GITHUB_TOKEN }}
+  token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   tag-example-image:
@@ -37,6 +37,7 @@ jobs:
         uses: shrink/actions-docker-registry-tag@v1
         with:
           registry: "${{ env.registry }}"
+          token: "${{ env.token }}"
           repository: "${{ env.repository }}"
           target: "${{ env.tag }}"
           tags: "${{ env.tag }}-single"
@@ -44,6 +45,7 @@ jobs:
         uses: shrink/actions-docker-registry-tag@v1
         with:
           registry: "${{ env.registry }}"
+          token: "${{ env.token }}"
           repository: "${{ env.repository }}"
           target: "${{ env.tag }}"
           tags: |
