@@ -26,6 +26,7 @@ jobs:
           echo branch of github.sha - raw: $(git branch -r -a --contains "${{ github.sha }}")
           echo env.OWNER_APPLICATION_NAME: ${{ env.OWNER_APPLICATION_NAME }}
           echo github.repository: ${{ github.repository }}
+          echo github.event.repository.name: ${{ github.event.repository.name }}
       # - name: Dump GitHub context
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
