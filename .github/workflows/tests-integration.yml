@@ -11,12 +11,12 @@ env:
   repository: "${{ github.repository }}"
   tag: "test-${{ github.run_id }}"
   image: "ghcr.io/${{ github.repository }}:test-${{ github.run_id }}"
-  # username: "${{ github.repository_owner }}"
-  # password: "${{ github.token }}"
-  # token: "${{ github.token }}"
-  username: ${{ github.actor }}
-  password: ${{ secrets.GITHUB_TOKEN }}
-  token: ${{ secrets.GITHUB_TOKEN }}
+  username: "${{ github.repository_owner }}"
+  password: "${{ github.token }}"
+  token: "${{ github.token }}"
+  # username: ${{ github.actor }}
+  # password: ${{ secrets.GITHUB_TOKEN }}
+  # token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   tag-example-image:
